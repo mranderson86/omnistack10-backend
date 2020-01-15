@@ -47,4 +47,15 @@ module.exports = {
         return response.json(dev);
     },
 
+    // Métodos que falta implementar
+    // update
+    async update () {
+
+    },
+
+    // destroy
+    async destroy () {
+
+    }
+
 };
