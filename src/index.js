@@ -4,12 +4,15 @@ const express = require("express");
 // importando a biblioteca de comunicação com o MongoDB
 const mongoose = require('mongoose');
 
+const cors = require('cors');
+
 // importando o módulo de rotas
 const routes = require('./routes');
 
 // Criando instância do Express
 const app = express();
 
+const port = process.env.PORT || 3333;;
 
 // Conexão com o mongdb
 mongoose.connect('mongodb+srv://mranderson86:mranderson86@cluster0-eshy2.mongodb.net/devs?retryWrites=true&w=majority',{
@@ -18,9 +21,11 @@ mongoose.connect('mongodb+srv://mranderson86:mranderson86@cluster0-eshy2.mongodb
      useUnifiedTopology: true,
 });
 
+app.use(cors());
 // aceita requisões com corpo no formato do json
 app.use(express.json());
 app.use(routes);
+
 
 // Métodos HTTP: GET , POST , PUT , DELETE
 // Tipos de parâmetros:
@@ -31,4 +36,4 @@ app.use(routes);
 
 // MongoDB (Não-relacional)
 
-app.listen(3333);
+app.listen(port);
