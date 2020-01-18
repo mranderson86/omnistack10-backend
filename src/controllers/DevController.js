@@ -1,7 +1,7 @@
 const axios = require('axios');
 const Dev = require('../models/Dev');
-
 const parseStringAsArray = require('../utils/parseStringAsArray');
+const {  findConnections, sendMessage } = require('../webSocket');
 
 module.exports = {
     async index(request, response){
@@ -43,6 +43,17 @@ module.exports = {
                 location
             });
         }
+
+        // Filtrar as conexões que estão dentro de um raio de 10 km
+        // E que o novo dev tenha algumas das tecnologias filtradas
+        // Avisa ao front-end web / mobile que um novo dev foi incluido no cadastro
+        const sendSocketMessageTo = findConnections(
+            { latitude, longitude } ,
+            techsArray,
+        );
+
+        // Envia mensagem para o front-end 
+        sendMessage(sendSocketMessageTo,'new-dev', dev);
 
         return response.json(dev);
     },

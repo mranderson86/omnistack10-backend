@@ -19,7 +19,7 @@ const server = http.Server(app);
 // Configura socket.io
 setupWebSocket(server);
 
-const port = process.env.PORT || 3333;;
+const port = process.env.PORT || 3333;
 
 // Conexão com o mongdb
 mongoose.connect('mongodb+srv://mranderson86:mranderson86@cluster0-eshy2.mongodb.net/devs?retryWrites=true&w=majority',{
