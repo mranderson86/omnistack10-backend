@@ -3,14 +3,21 @@ const express = require("express");
 
 // importando a biblioteca de comunicação com o MongoDB
 const mongoose = require('mongoose');
-
 const cors = require('cors');
+const http = require('http');
+
+const { setupWebSocket } = require('./webSocket');
 
 // importando o módulo de rotas
 const routes = require('./routes');
 
 // Criando instância do Express
 const app = express();
+
+const server = http.Server(app);
+
+// Configura socket.io
+setupWebSocket(server);
 
 const port = process.env.PORT || 3333;;
 
