@@ -31,7 +31,7 @@ module.exports = {
             const location = {
                 type: 'Point',
                 coordinates: [ longitude, latitude ],
-        }
+            }
 
             // Inserindo dados dentro da tabela Devs no mongodb
             dev = await Dev.create({
@@ -42,18 +42,19 @@ module.exports = {
                 techs: techsArray,
                 location
             });
+
+
+            // Filtrar as conexões que estão dentro de um raio de 10 km
+            // E que o novo dev tenha algumas das tecnologias filtradas
+            // Avisa ao front-end web / mobile que um novo dev foi incluido no cadastro
+            const sendSocketMessageTo = findConnections(
+                { latitude, longitude } ,
+                techsArray,
+            );
+
+            // Envia mensagem para o front-end 
+            sendMessage(sendSocketMessageTo,'new-dev', dev);
         }
-
-        // Filtrar as conexões que estão dentro de um raio de 10 km
-        // E que o novo dev tenha algumas das tecnologias filtradas
-        // Avisa ao front-end web / mobile que um novo dev foi incluido no cadastro
-        const sendSocketMessageTo = findConnections(
-            { latitude, longitude } ,
-            techsArray,
-        );
-
-        // Envia mensagem para o front-end 
-        sendMessage(sendSocketMessageTo,'new-dev', dev);
 
         return response.json(dev);
     },
