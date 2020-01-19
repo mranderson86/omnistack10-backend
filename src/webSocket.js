@@ -14,6 +14,8 @@ exports.setupWebSocket = (server) => {
 
         const { latitude, longitude, techs } = socket.handshake.query;
 
+        console.log(socket.handshake.query);
+
         connections.push({
             id: socket.id,
             coordinates: {
@@ -29,7 +31,7 @@ exports.setupWebSocket = (server) => {
 
 exports.findConnections = (coordinates , techs) => {
     return connections.filter(connection => {
-        return calculateDistance(coordinates, connections.coordinates) < 10
+        return calculateDistance(coordinates, connection.coordinates) < 10
         && connections.techs.some(item => techs.includes(item))
     });
 };
