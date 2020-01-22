@@ -15,6 +15,8 @@ routes.post('/devs', DevController.store);
 // Rota de busca
 routes.get('/search', SearchController.index);
 
+// Rota de Exclusão
+routes.delete('/devs', DevController.destroy);
 
 module.exports = routes;
 

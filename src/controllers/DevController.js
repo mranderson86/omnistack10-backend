@@ -4,6 +4,7 @@ const parseStringAsArray = require('../utils/parseStringAsArray');
 const {  findConnections, sendMessage } = require('../webSocket');
 
 module.exports = {
+    // devolve a lista de devs
     async index(request, response){
         const devs = await Dev.find();
 
@@ -59,15 +60,36 @@ module.exports = {
         return response.json(dev);
     },
 
-    // Métodos que falta implementar
     // update
-    async update () {
+    async update (request , response) {
+        const { github_username, techs, latitude, longitude } = request.body;
 
+        const location = {
+            type: 'Point',
+            coordinates: [ longitude, latitude ],
+        }
+
+        Dev.updateOne({github_username: github_username}, 
+            { techs, location },
+            (err,res) => {
+                if(err){
+                    console.log(err);
+                }
+            }
+        );
     },
 
     // destroy
-    async destroy () {
+    async destroy (request , response) {
 
+        const { github_username } = request.body;
+
+        Dev.deleteOne({ github_username : github_username}, err => {
+            console.log(err);
+        });
+
+        const devs = await Dev.find();
+        return response.json(devs);
     }
 
 };
