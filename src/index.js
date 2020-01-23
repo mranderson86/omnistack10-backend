@@ -33,7 +33,6 @@ app.use(cors());
 app.use(express.json());
 app.use(routes);
 
-
 // Métodos HTTP: GET , POST , PUT , DELETE
 // Tipos de parâmetros:
 

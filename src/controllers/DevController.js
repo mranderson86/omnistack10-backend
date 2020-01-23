@@ -77,18 +77,23 @@ module.exports = {
                 }
             }
         );
+
+        const devs = await Dev.find();
+
+        return response.json(devs);
     },
 
     // destroy
     async destroy (request , response) {
 
-        const { github_username } = request.body;
-
-        Dev.deleteOne({ github_username : github_username}, err => {
-            console.log(err);
+        const { github_username } = request.query;
+        Dev.deleteOne({ github_username : github_username}, err => {  
+            if(err){
+                console.log(err);
+            }
         });
-
         const devs = await Dev.find();
+
         return response.json(devs);
     }
 
