@@ -15,6 +15,8 @@ module.exports = {
 
         const { github_username, techs, latitude, longitude } = request.body;
 
+        //console.log('tecnologias ',techs);
+
         // Consulta se o usuário já está cadastrado no banco de dados
         let dev = await Dev.findOne({github_username});
 
@@ -44,14 +46,17 @@ module.exports = {
                 location
             });
 
+            console.log(techsArray);
 
             // Filtrar as conexões que estão dentro de um raio de 10 km
             // E que o novo dev tenha algumas das tecnologias filtradas
             // Avisa ao front-end web / mobile que um novo dev foi incluido no cadastro
             const sendSocketMessageTo = findConnections(
                 { latitude, longitude } ,
-                techsArray,
+                techsArray
             );
+
+            //console.log('new dev', sendSocketMessageTo);
 
             // Envia mensagem para o front-end 
             sendMessage(sendSocketMessageTo,'new-dev', dev);

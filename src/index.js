@@ -41,4 +41,5 @@ app.use(routes);
 // Body Params: request.body (Dados para criação ou alteração de um registro)
 
 // MongoDB (Não-relacional)
-app.listen(port);
+//app.listen(port);
+server.listen(port);

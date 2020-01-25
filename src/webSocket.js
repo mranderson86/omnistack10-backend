@@ -2,6 +2,8 @@ const socketio = require('socket.io');
 
 const calculateDistance = require('./utils/calculateDistance');
 
+const parseStringAsArray = require('./utils/parseStringAsArray');
+
 const connections = [];
 
 let io;
@@ -11,10 +13,15 @@ exports.setupWebSocket = (server) => {
     io = socketio(server);
 
     io.on('connection', socket => {
-
+        // Recebe informações do frontend
         const { latitude, longitude, techs } = socket.handshake.query;
 
-        console.log(socket.handshake.query);
+        //console.log('server ',latitude, longitude, techs);
+        //console.log('server ',socket.id);
+
+        //setTimeout(() => {
+        //socket.emit('message','Hello OmniStack');
+        //}, 3000); 
 
         connections.push({
             id: socket.id,
@@ -31,8 +38,9 @@ exports.setupWebSocket = (server) => {
 
 exports.findConnections = (coordinates , techs) => {
     return connections.filter(connection => {
-        return calculateDistance(coordinates, connection.coordinates) < 10
-        && connections.techs.some(item => techs.includes(item))
+        //console.log(techs , connection.techs);
+        return calculateDistance(coordinates,connection.coordinates) < 10 &&
+        connection.techs.some(item => techs.includes(item))
     });
 };
 
